@@ -20,7 +20,7 @@ const fetchMake = async (id) => {
     );
     const parsedData = await parser.parseStringPromise(await rawData.text());
     const processedData =
-      parsedData.Response.Results[0].VehicleTypesForMakeIds.map(
+      parsedData.Response.Results[0]?.VehicleTypesForMakeIds?.map(
         (vehicleType) => {
           return {
             typeId: vehicleType.VehicleTypeId,
