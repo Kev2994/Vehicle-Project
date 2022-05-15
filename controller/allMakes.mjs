@@ -1,52 +1,17 @@
-import { fetchAllMakes, fetchMake } from "../services/allVehicleMake.mjs";
+import { Vehicle } from "../model/vehicleModel.mjs";
 
-const getProcessedData = async (req, res) => {
+const getVehicleData = async (req, res) => {
+  const { page = 1, limit = 10 } = req.query;
+
   try {
-    let makes = await fetchAllMakes();
-    //const filterMakes = makes.filter((make) => (make.Make_ID.length = 1));
-    makes = makes.slice(0, 2000);
-    //const processedData = [];
-
-    const batchOperation = async () => {
-      try {
-        let position = 0;
-        let results = [];
-        while (position < makes.length) {
-          const itemsForBatch = makes.slice(position, position + 10);
-          results = [
-            ...results,
-            ...(await Promise.all(
-              itemsForBatch.map(async (make) => {
-                make.vehicleTypes = await fetchMake(make.Make_ID[0]);
-                return make;
-              })
-            )),
-          ];
-          position += 10;
-        }
-        return results;
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    let processedData = await batchOperation();
-    /* let processedData = await Promise.all(
-      makes.map(async (make) => {
-        make.vehicleTypes = await fetchMake(make.Make_ID[0]);
-        return make;
-      })
-    );
-    for (let make of makes) {
-      const vehicleTypes = await fetchMake(make.Make_ID[0]);
-      make.vehicleTypes = vehicleTypes;
-      processedData.push(make);
-    }*/
-    //console.log({ processedData });
-    res.send(processedData);
+    const vehicles = await Vehicle.find({}, { _id: 0, __v: 0 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+    res.json(vehicles);
   } catch (err) {
     console.error(err);
   }
 };
 
-export { getProcessedData };
+export { getVehicleData };

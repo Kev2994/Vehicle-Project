@@ -1,7 +1,8 @@
 import express from "express";
 const router = express.Router();
-import { getProcessedData } from "../controller/allMakes.mjs";
+import { getVehicleData } from "../controller/allMakes.mjs";
+import { Vehicle } from "../model/vehicleModel.mjs";
 
-router.get("/", getProcessedData);
+router.get("/", getVehicleData);
 
 export { router };
