@@ -2,6 +2,9 @@ import fetch from "node-fetch";
 import xml2js from "xml2js";
 const parser = new xml2js.Parser({ mergeAttrs: true });
 
+
+//@desc- fetchAllMakes fetches all vehicle makes and parse it and returns allVehicleMakes
+
 const fetchAllMakes = async () => {
   try {
     const rawData = await fetch(
@@ -13,6 +16,10 @@ const fetchAllMakes = async () => {
     console.error(err);
   }
 };
+
+
+// @desc- fetchMake fetches vehicle types per Make and pase it and return all vehicle types with typeID and typeName Property
+
 const fetchMake = async (id) => {
   try {
     const rawData = await fetch(
@@ -28,11 +35,11 @@ const fetchMake = async (id) => {
           };
         }
       );
-    // console.log(processedData);
-    // return data.Response.Results[0].VehicleTypesForMakeIds;
     return processedData;
   } catch (err) {
     console.error(err);
   }
 };
+
+
 export { fetchAllMakes, fetchMake };

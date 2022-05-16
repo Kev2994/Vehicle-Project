@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+//defined Vehicle schema as per requirements
+
 const subSchema = new Schema(
   {
     typeId: [
