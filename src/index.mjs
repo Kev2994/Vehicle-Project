@@ -6,7 +6,7 @@ import cron from "node-cron";
 import { getProcessedData } from "./scheduleTask.mjs";
 import { TypeDefs } from "./vehicleMake.schema.mjs";
 import { Resolvers } from "./vehicleMake.resolver.mjs";
-const PORT = 3000;
+
 dotenv.config();
 
 const main = async () => {
@@ -22,9 +22,14 @@ const main = async () => {
 
   // DB Connection
 
-  mongoose.connect(process.env.Mongo_URL).then(() => {
-    console.log("connected");
+  mongoose.connect(process.env.Mongo_URL,{
+    useNewUrlParser: "true",
   });
+
+  mongoose.connection.on("connected", (err, res) => {
+    console.log("mongoose is connected")
+  });
+
 
   const server = express();
 
@@ -37,8 +42,8 @@ const main = async () => {
   await apolloServer.start();
   apolloServer.applyMiddleware({ app: server });
 
-  server.listen(PORT, () =>
-    console.log(`listening at http://localhost:${PORT}`)
+  server.listen(process.env.PORT, () =>
+    console.log(`listening at http://localhost:${process.env.PORT}/graphql`)
   );
 };
 
