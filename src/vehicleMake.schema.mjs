@@ -2,7 +2,6 @@ import { gql } from "apollo-server-express";
 
 const TypeDefs = gql`
   type Vehicle {
-    _id: ID
     Make_ID: [ID!]!
     Make_Name: [String!]!
     vehicleTypes: [VehicleType]
@@ -14,7 +13,7 @@ const TypeDefs = gql`
   }
 
   type Query {
-    getVehicles(limit: Int, offset:Int): [Vehicle]
+    getVehicles(limit: Int, offset: Int): [Vehicle]
   }
 `;
 

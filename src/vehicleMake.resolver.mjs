@@ -5,7 +5,11 @@ import { Vehicle } from "./model/vehicleModel.mjs";
 const Resolvers = {
   Query: {
     getVehicles: async (parent, args) => {
-      const vehicles = await Vehicle.find({},{ _id: 0, __v: 0 }).limit((args.limit) *1).skip((args.offset -1) * args.limit).exec();
+      const { limit = 100, offset = 0 } = args;
+      const vehicles = await Vehicle.find({}, { _id: 0, __v: 0 })
+        .limit(limit * 1)
+        .skip(offset)
+        .exec();
       return vehicles;
     },
   },
