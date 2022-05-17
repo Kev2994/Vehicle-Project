@@ -1,6 +1,7 @@
 FROM node:alpine
-WORKDIR /vehicle-project
+WORKDIR /usr/src/app
 COPY package*.json .
-RUN npm ci
+RUN npm install
 COPY . .
+EXPOSE 3000
 CMD ["npm", "run", "start"]

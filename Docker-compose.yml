@@ -7,7 +7,7 @@ services:
     image: mongo:latest
     restart: always
     ports:
-      - 2717:27017
+      - 27017:27017
     volumes:
       - mongo_db:/data/db
 
@@ -16,6 +16,8 @@ services:
     build: .
     ports:
       - 3000:3000
+    volumes:
+      - .:/usr/src/app
     environment:
       PORT: 3000
       Mongo_URL: mongodb://mongo_db:27017/vehicledb
